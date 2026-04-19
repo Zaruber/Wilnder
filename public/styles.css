@@ -79,7 +79,7 @@ body {
     max(18px, env(safe-area-inset-bottom));
   display: grid;
   grid-template-rows: auto 1fr auto;
-  gap: 7px;
+  gap: 4px;
 }
 
 .top-wrap {
@@ -158,7 +158,7 @@ h1 {
 
 .deck {
   position: relative;
-  height: clamp(520px, 74dvh, 790px);
+  height: clamp(560px, 79dvh, 860px);
 }
 
 .collection-panel {
@@ -276,16 +276,19 @@ h1 {
 
 .card-media-wrap {
   position: absolute;
-  inset: 8px 8px 58px;
+  inset: 8px 8px 50px;
   border-radius: 28px;
   overflow: hidden;
   background: #2d1b78;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .card-media {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   display: block;
 }
@@ -388,7 +391,7 @@ h1 {
   position: absolute;
   left: 12px;
   right: 12px;
-  bottom: 12px;
+  bottom: 8px;
   min-height: 46px;
   border-radius: 999px;
   border: 1px solid rgba(204, 173, 255, 0.48);
@@ -493,7 +496,7 @@ h1 {
   }
 
   .deck {
-    height: min(72dvh, 720px);
+    height: min(79dvh, 820px);
   }
 
   .wb-card,
@@ -502,7 +505,7 @@ h1 {
   }
 
   .card-media-wrap {
-    inset: 7px 7px 56px;
+    inset: 7px 7px 46px;
     border-radius: 20px;
   }
 
@@ -534,7 +537,7 @@ h1 {
 
 @media (max-height: 760px) {
   .deck {
-    height: clamp(450px, 64dvh, 620px);
+    height: clamp(510px, 74dvh, 700px);
   }
 }
 
