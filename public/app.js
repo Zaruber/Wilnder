@@ -87,33 +87,48 @@ async function topUpPool(targetCount) {
   state.loading = true;
 
   try {
-    const currentBatch = state.batch;
-    const params = new URLSearchParams({
-      count: String(targetCount),
-      seed: state.seed,
-      batch: String(currentBatch)
-    });
-
-    const response = await fetch(`/api/random-cards?${params.toString()}`, {
-      headers: { Accept: "application/json" }
-    });
-
-    const payload = await response.json();
-    if (!response.ok) {
-      throw new Error(payload.error || "Ошибка API");
-    }
-    state.batch += 1;
-
-    const cards = Array.isArray(payload.cards) ? payload.cards : [];
     const knownArticles = new Set([
       ...state.pool.map((card) => card.article),
       ...state.deck.map((card) => card.article)
     ]);
 
-    for (const card of cards) {
-      if (!knownArticles.has(card.article)) {
-        knownArticles.add(card.article);
-        state.pool.push(card);
+    const maxRetries = 5;
+
+    for (let retry = 0; retry < maxRetries && state.pool.length < targetCount; retry += 1) {
+      const currentBatch = state.batch;
+      const params = new URLSearchParams({
+        count: String(targetCount),
+        seed: state.seed,
+        batch: String(currentBatch)
+      });
+
+      try {
+        const response = await fetch(`/api/random-cards?${params.toString()}`, {
+          headers: { Accept: "application/json" }
+        });
+
+        const payload = await response.json();
+        state.batch += 1;
+
+        if (!response.ok) {
+          continue;
+        }
+
+        const cards = Array.isArray(payload.cards) ? payload.cards : [];
+        for (const card of cards) {
+          if (!knownArticles.has(card.article)) {
+            knownArticles.add(card.article);
+            state.pool.push(card);
+          }
+        }
+
+        if (cards.length > 0) {
+          break;
+        }
+      } catch (_error) {
+        // Move to next batch even when this request failed,
+        // otherwise a single bad batch can block the endless feed.
+        state.batch += 1;
       }
     }
   } catch (error) {
@@ -125,16 +140,24 @@ async function topUpPool(targetCount) {
 }
 
 async function refillDeck() {
-  while (state.deck.length < STACK_SIZE) {
+  let emptyRefillAttempts = 0;
+
+  while (state.deck.length < STACK_SIZE && emptyRefillAttempts < 8) {
     if (state.pool.length === 0) {
       await topUpPool(FETCH_BATCH_SIZE);
+      if (state.pool.length === 0) {
+        emptyRefillAttempts += 1;
+        continue;
+      }
     }
 
     const nextCard = state.pool.shift();
     if (!nextCard) {
-      break;
+      emptyRefillAttempts += 1;
+      continue;
     }
     state.deck.push(nextCard);
+    emptyRefillAttempts = 0;
   }
 }
 

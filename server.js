@@ -9,6 +9,7 @@ const WB_HOST = "https://nsk-basket-cdn-01.geobasket.ru";
 const RANDOM_ARTICLE_MIN = 10000000;
 const RANDOM_ARTICLE_MAX = 999999999;
 const FETCH_TIMEOUT_MS = 2600;
+const PRICE_TIMEOUT_MS = 1300;
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -116,9 +117,6 @@ async function fetchCardByArticle(article) {
   const category = normalizeText(payload.subj_name || payload.subj_root_name) || "Товар";
 
   const price = await fetchPrice(article, volume, part);
-  if (!Number.isFinite(price)) {
-    return null;
-  }
 
   return {
     article,
@@ -133,7 +131,7 @@ async function fetchCardByArticle(article) {
 
 async function fetchPrice(article, volume, part) {
   const priceUrl = `${WB_HOST}/vol${volume}/part${part}/${article}/info/price-history.json`;
-  const response = await fetchWithTimeout(priceUrl, FETCH_TIMEOUT_MS);
+  const response = await fetchWithTimeout(priceUrl, PRICE_TIMEOUT_MS);
   if (!response || !response.ok) {
     return null;
   }
