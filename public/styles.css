@@ -1,0 +1,546 @@
+:root {
+  --bg-deep: #1f0f60;
+  --bg-mid: #3a1f8e;
+  --bg-soft: #4d27a8;
+  --panel: #3a2391;
+  --panel-soft: #5733b8;
+  --text-main: #f6f0ff;
+  --text-muted: #d3c9ef;
+  --accent-lime: #d6f86e;
+  --accent-pink: #ff5b86;
+  --accent-purple: #8357ef;
+  --toolbar-base-1: #b68cf8;
+  --toolbar-base-2: #a57bf0;
+  --toolbar-active: #4a2aa5;
+  --card-shadow: 0 28px 56px rgba(8, 4, 24, 0.55);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: "Work Sans", sans-serif;
+  color: var(--text-main);
+  background:
+    radial-gradient(circle at 12% 18%, rgba(180, 110, 255, 0.24), transparent 36%),
+    radial-gradient(circle at 92% 82%, rgba(128, 77, 246, 0.24), transparent 34%),
+    linear-gradient(172deg, #1f0f5f 0%, #2f197f 42%, #3b1e97 100%);
+  overflow-x: hidden;
+}
+
+.background-orb {
+  position: fixed;
+  border-radius: 999px;
+  filter: blur(20px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb-1 {
+  width: 220px;
+  height: 220px;
+  top: -80px;
+  left: -90px;
+  background: radial-gradient(circle, rgba(154, 88, 255, 0.45), transparent 72%);
+}
+
+.orb-2 {
+  width: 260px;
+  height: 260px;
+  right: -120px;
+  top: 28%;
+  background: radial-gradient(circle, rgba(171, 109, 255, 0.3), transparent 76%);
+}
+
+.orb-3 {
+  width: 280px;
+  height: 280px;
+  left: 18%;
+  bottom: -120px;
+  background: radial-gradient(circle, rgba(120, 79, 238, 0.34), transparent 78%);
+}
+
+.app-shell {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 430px);
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding:
+    max(14px, env(safe-area-inset-top))
+    14px
+    max(18px, env(safe-area-inset-bottom));
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 7px;
+}
+
+.top-wrap {
+  display: grid;
+  gap: 0;
+}
+
+.brand-row {
+  background: linear-gradient(160deg, rgba(66, 41, 154, 0.96), rgba(53, 32, 131, 0.9));
+  border: 1px solid rgba(170, 130, 255, 0.42);
+  border-radius: 24px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-mark svg {
+  width: 25px;
+  height: 25px;
+  color: var(--accent-lime);
+}
+
+h1 {
+  margin: 0;
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(2rem, 6.5vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.icon-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid rgba(171, 131, 255, 0.46);
+  background: rgba(98, 63, 198, 0.7);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #f3eaff;
+  cursor: pointer;
+  transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
+}
+
+.icon-circle svg {
+  width: 21px;
+  height: 21px;
+}
+
+.icon-circle:hover {
+  transform: translateY(-1px);
+  border-color: rgba(229, 213, 255, 0.86);
+  background: rgba(125, 78, 242, 0.82);
+}
+
+.icon-circle:focus-visible,
+.toolbar-button:focus-visible,
+.card-link:focus-visible,
+.distance-copy:focus-visible,
+.collection-copy:focus-visible,
+.collection-link:focus-visible {
+  outline: 3px solid rgba(183, 137, 255, 0.95);
+  outline-offset: 2px;
+}
+
+.deck-panel {
+  position: relative;
+}
+
+.deck {
+  position: relative;
+  height: clamp(520px, 74dvh, 790px);
+}
+
+.collection-panel {
+  position: absolute;
+  inset: 0;
+  border-radius: 34px;
+  border: 1px solid rgba(176, 136, 255, 0.44);
+  background: linear-gradient(175deg, rgba(67, 40, 159, 0.97), rgba(42, 24, 109, 0.97));
+  box-shadow: var(--card-shadow);
+  padding: 20px 16px 14px;
+  overflow: auto;
+}
+
+.collection-header {
+  margin: 0;
+  font-family: "Outfit", sans-serif;
+  font-size: 1.4rem;
+}
+
+.collection-subtitle {
+  margin: 6px 0 14px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.collection-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.collection-item {
+  border: 1px solid rgba(188, 148, 255, 0.35);
+  border-radius: 16px;
+  background: rgba(102, 64, 198, 0.24);
+  padding: 10px;
+}
+
+.collection-item h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.collection-meta {
+  margin: 5px 0 8px;
+  color: #dbccfb;
+  font-size: 0.82rem;
+}
+
+.collection-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.collection-copy,
+.collection-link {
+  min-height: 40px;
+  border-radius: 999px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(204, 172, 255, 0.42);
+  background: rgba(86, 52, 169, 0.65);
+  color: #f4eaff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.79rem;
+  cursor: pointer;
+}
+
+.collection-empty {
+  margin: 18px 0 0;
+  color: #dac8fa;
+}
+
+.wb-card {
+  position: absolute;
+  inset: 0;
+  border-radius: 34px;
+  border: 1px solid rgba(184, 145, 255, 0.48);
+  background: linear-gradient(173deg, rgba(68, 40, 162, 0.95), rgba(48, 27, 119, 0.95));
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  transition: transform 260ms ease, opacity 260ms ease;
+}
+
+.wb-card.depth-1 {
+  transform: translateY(14px) scale(0.974);
+  opacity: 0.88;
+}
+
+.wb-card.depth-2 {
+  transform: translateY(27px) scale(0.946);
+  opacity: 0.65;
+}
+
+.wb-card.is-top {
+  cursor: grab;
+}
+
+.wb-card.dragging {
+  transition: none;
+  cursor: grabbing;
+}
+
+.wb-card.swipe-away {
+  transition: transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1), opacity 320ms ease;
+}
+
+.card-media-wrap {
+  position: absolute;
+  inset: 8px 8px 58px;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #2d1b78;
+}
+
+.card-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.match-badge {
+  position: absolute;
+  top: 24px;
+  right: 14px;
+  z-index: 2;
+  margin: 0;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-family: "Outfit", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #31410c;
+  background: var(--accent-lime);
+  box-shadow: 0 10px 20px rgba(10, 8, 18, 0.32);
+}
+
+.swipe-badge {
+  position: absolute;
+  top: 78px;
+  border-radius: 999px;
+  border: 2px solid currentColor;
+  padding: 5px 10px;
+  font-family: "Outfit", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  transform: translateY(-7px);
+  transition: opacity 140ms ease, transform 140ms ease;
+  z-index: 3;
+}
+
+.swipe-left {
+  left: 14px;
+  color: var(--accent-pink);
+}
+
+.swipe-right {
+  right: 14px;
+  color: #baf7de;
+}
+
+.card-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 72px 16px 14px;
+  background: linear-gradient(to top, rgba(10, 5, 28, 0.93), rgba(10, 5, 28, 0.14) 70%, transparent);
+}
+
+.profile-title {
+  margin: 0;
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(1.5rem, 5.6vw, 2.08rem);
+  line-height: 1.12;
+}
+
+.distance-copy {
+  margin-top: 8px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: #f7efff;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.pin-icon {
+  width: 17px;
+  height: 17px;
+  color: #ffffff;
+}
+
+.card-article {
+  font-size: 1.02rem;
+  font-weight: 500;
+}
+
+.copy-icon {
+  width: 17px;
+  height: 17px;
+  color: #f4dbff;
+}
+
+.profile-subtitle {
+  margin: 8px 0 0;
+  color: #d8ccf1;
+  font-size: 0.9rem;
+}
+
+.card-link {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  min-height: 46px;
+  border-radius: 999px;
+  border: 1px solid rgba(204, 173, 255, 0.48);
+  background: rgba(93, 58, 186, 0.78);
+  color: #f4e7ff;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-link:hover {
+  background: rgba(118, 73, 232, 0.83);
+  border-color: rgba(234, 216, 255, 0.78);
+}
+
+.bottom-toolbar {
+  width: calc(100% - 16px);
+  max-width: 414px;
+  margin: 0 auto;
+  background: linear-gradient(160deg, var(--toolbar-base-1), var(--toolbar-base-2));
+  border-radius: 999px;
+  padding: 7px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.toolbar-button {
+  position: relative;
+  min-height: 64px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #4b2a9b;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 1px;
+  cursor: pointer;
+  font: inherit;
+}
+
+.toolbar-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.toolbar-button span {
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.toolbar-count {
+  position: absolute;
+  right: 8px;
+  top: 6px;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  padding: 0 6px;
+  background: rgba(74, 42, 165, 0.94);
+  color: #efe4ff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Outfit", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.toolbar-button.is-active {
+  background: var(--toolbar-active);
+  color: #f6eeff;
+  box-shadow: 0 10px 24px rgba(58, 35, 133, 0.45);
+}
+
+@media (max-width: 430px) {
+  .app-shell {
+    width: 100%;
+    padding:
+      max(10px, env(safe-area-inset-top))
+      10px
+      max(14px, env(safe-area-inset-bottom));
+  }
+
+  .brand-row {
+    padding: 10px 12px;
+    border-radius: 20px;
+  }
+
+  h1 {
+    font-size: clamp(1.85rem, 8vw, 2.3rem);
+  }
+
+  .icon-circle {
+    width: 44px;
+    height: 44px;
+  }
+
+  .deck {
+    height: min(72dvh, 720px);
+  }
+
+  .wb-card,
+  .collection-panel {
+    border-radius: 26px;
+  }
+
+  .card-media-wrap {
+    inset: 7px 7px 56px;
+    border-radius: 20px;
+  }
+
+  .profile-title {
+    font-size: clamp(1.36rem, 6vw, 1.86rem);
+  }
+
+  .distance-copy {
+    margin-top: 6px;
+  }
+
+  .card-link {
+    min-height: 44px;
+  }
+
+  .bottom-toolbar {
+    width: calc(100% - 14px);
+    max-width: 100%;
+  }
+
+  .toolbar-button {
+    min-height: 62px;
+  }
+
+  .toolbar-button span {
+    font-size: 0.64rem;
+  }
+}
+
+@media (max-height: 760px) {
+  .deck {
+    height: clamp(450px, 64dvh, 620px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition-duration: 1ms !important;
+  }
+}
